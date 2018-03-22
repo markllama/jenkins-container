@@ -3,7 +3,7 @@
 
 CN=hp-blade15
 FQDN=${CN}.cd.e2e.bos.redhat.com
-PASSWORD="secret1"
+KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-"badpassword"}
 
 
 SUBJ="/C=US/ST=Massachusetts/L=Westford/O=Red Hat Inc./OU=Eng CD/CN=${FQDN}"
@@ -17,15 +17,15 @@ function create_self_signed_cert() {
 
 function create_pkcs_file() {
     openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}-key.pem \
-            -passout "pass:${PASSWORD}" \
+            -passout "pass:${KEYSTORE_PASSWORD}" \
             -in ${CN}-cert.pem -certfile ${CN}-cert.pem -name ${FQDN}
 }
 
 function create_keystore() {
     keytool -importkeystore -srckeystore ${CN}.p12 \
-            -srcstorepass "${PASSWORD}" -srcstoretype PKCS12 \
+            -srcstorepass "${KEYSTORE_PASSWORD}" -srcstoretype PKCS12 \
             -srcalias ${FQDN} -deststoretype PKCS12 \
-            -destkeystore ${CN}.jks -deststorepass "${PASSWORD}" \
+            -destkeystore ${CN}.jks -deststorepass "${KEYSTORE_PASSWORD}" \
             -destalias ${FQDN}
 }
 

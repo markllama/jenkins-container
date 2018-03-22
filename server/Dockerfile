@@ -9,14 +9,20 @@ RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
 RUN yum -y install java-1.8.0-openjdk jenkins ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
-ADD jenkins.sh /start.sh
+RUN mkdir /jenkins ; chown jenkins:jenkins /jenkins
+RUN mkdir /backups ; chown jenkins:jenkins /backups
+
+ADD jenkins.sh /jenkins/start.sh
+ADD jenkins-plugins.txt /jenkins/plugins.txt
+
+RUN /bin/sh /jenkins/start.sh ; chown -R jenkins:jenkins /jenkins
 
 # Location of the keystore
-VOLUME /jenkins.jks
+VOLUME /jenkins/keystore.jks
 
 EXPOSE 8443
 # EXPOSE 8080
 
 USER jenkins
 
-CMD /usr/bin/sh /start.sh
+CMD /bin/sh /jenkins/start.sh daemon

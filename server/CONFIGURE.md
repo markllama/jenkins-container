@@ -14,3 +14,7 @@ docker run ... --volume -volume $(pwd)/hp-blade15.jks:/jenkins.jks:z ...
 * `KEYSTORE_PASSWORD`
   The password to access the Java Keystore and establish SSL communications
 
+# CLI tool
+
+* https://wiki.jenkins.io/display/JENKINS/Jenkins+CLI
+

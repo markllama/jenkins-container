@@ -11,15 +11,12 @@ RUN yum -y install java-1.8.0-openjdk jenkins ; \
 
 ADD jenkins.sh /start.sh
 
-# Location of the working data
-#VOLUME /var/lib/jenkins
-
 # Location of the keystore
-#VOLUME /jenkins.jks
+VOLUME /jenkins.jks
 
 EXPOSE 8443
-EXPOSE 8080
+# EXPOSE 8080
 
-#USER jenkins
+USER jenkins
 
 CMD /usr/bin/sh /start.sh

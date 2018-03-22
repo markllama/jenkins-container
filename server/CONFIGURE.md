@@ -1,15 +1,16 @@
+# Volumes
+
+* `jenkins.jks`
+  The Java Keystore for an SSL certificate for session encryption
+
+To get SELinux permissions set properly, use the `z` option on the volume spec
+---
+docker run ... --volume -volume $(pwd)/hp-blade15.jks:/jenkins.jks:z ...
+---
+
+
 # Variables
 
-* PORT `--httpPort`
-* LISTEN_ADDRESS `--httpListenAddress`
-* HTTPS_PORT `--httpsPort`
-* HTTPS_KEYSTORE `--httpsKeyStore`
-* HTTPS_KEYSTORE_PASSWORD `--httpsKeyStorePassword`
-* HTTPS_LISTEN_ADDRESS `--httpsListenAddress`
+* `KEYSTORE_PASSWORD`
+  The password to access the Java Keystore and establish SSL communications
 
-* PARAMS
----
---logfile=/var/log/jenkins/jenkins.log 
---webroot=/var/cache/jenkins/war
---daemon
----

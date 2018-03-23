@@ -6,7 +6,7 @@ RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \
     rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 
-RUN yum -y install java-1.8.0-openjdk jenkins ; \
+RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 RUN mkdir /jenkins ; chown jenkins:jenkins /jenkins

@@ -1,6 +1,11 @@
 #!/bin/sh
 # http://sam.gleske.net/blog/engineering/2016/05/04/jenkins-with-ssl.html
 
+# This can be easier:
+# keytool -genkey -alias ystore jenkins.key -keysize 2048
+# From https://www.sans.org/reading-room/whitepapers/bestprac/securing-jenkins-ci-systems-36872
+# add -dname "c=US, cd=<name>, o=Red Hat Inc., ou=Engineering CD, ...
+
 CN=hp-blade15
 FQDN=${CN}.cd.e2e.bos.redhat.com
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-"badpassword"}

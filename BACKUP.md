@@ -3,7 +3,8 @@
 Files from buildvm 20180323
 
 ## Files
----
+
+```
 com.redhat.jenkins.plugins.ci.GlobalCIConfiguration.xml
 com.sonyericsson.rebuild.RebuildDescriptor.xml
 config.xml
@@ -31,11 +32,11 @@ org.jenkinsci.plugins.pipeline.modeldefinition.config.GlobalConfig.xml
 org.jenkinsci.plugins.workflow.flow.FlowExecutionList.xml
 org.jenkinsci.plugins.workflow.libs.GlobalLibraries.xml
 scriptApproval.xml
----
+```
 
 ## Directories
 
----
+```
 ./update-center-rootCAs
 ./fingerprints
 #./jobs          # BIG ACTIVE
@@ -48,16 +49,16 @@ scriptApproval.xml
 ./users
 #./workflow-libs # EMPTY
 #./workspace     # TMP BIG
----
+```
 
 
 ## Jobs
 
----
+```
 (cd /mnt/nfs/jenkins_home ; tar --exclude jobs --exclude logs --exclude caches --exclude secrets --exclude plugins --exclude workspace --exclude identity.key.enc -czf ~/buildvm-jenkins-config-backup-$(date +%Y%m%d-%H%M%S).tar.gz *)
 
 tar --exclude builds -C /mnt/nfs/jenkins_home -czf ~/buildvm-jenkins-jobs-backup-$(date +%Y%m%d-%H%M%S).tar.gz jobs
----
+```
 
 
 ## Restore 

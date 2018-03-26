@@ -6,7 +6,7 @@ RHEL or CentOS.
 The goal is to create an image that is ready to restore a
 configuration from a backup and take over as the master Jenkins
 server for a build "cluster". It will enforce SSL with a provided
-cert/key set and 
+cert/key set.
 
 
 ## Traffic Encryption - SSL

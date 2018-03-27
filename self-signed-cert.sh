@@ -6,8 +6,9 @@
 # From https://www.sans.org/reading-room/whitepapers/bestprac/securing-jenkins-ci-systems-36872
 # add -dname "c=US, cd=<name>, o=Red Hat Inc., ou=Engineering CD, ...
 
-CN=hp-blade15
-FQDN=${CN}.cd.e2e.bos.redhat.com
+CN=${CN:-hp-blade15.cd}
+DNSDOMAIN=${DNSDOMAIN:-e2e.bos.redhat.com}
+FQDN=${CN}.${DNSDOMAIN}
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-"badpassword"}
 
 

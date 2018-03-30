@@ -67,7 +67,6 @@ ssh-credentials
 ssh-slaves
 structs
 subversion
-thinbackup
 timestamper
 token-macro
 update-sites-manager

@@ -2,16 +2,28 @@
 #FROM centos
 FROM rhel7
 
-ENV JENKINS_HOME="/jenkins" \
+ARG TINI_VERSION=v0.17.0
+ARG TINI_URL=https://github.com/krallin/tini/releases/download/
+ADD $TINI_URL/$TINI_VERSION/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+
+ARG GOSU_VERSION=1.10
+ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
+ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
+RUN chmod a+x /usr/bin/gosu
+
+ARG JENKINS_ROOT="/jenkins"
+ENV JENKINS_HOME="$JENKINS_ROOT/config" \
     JENKINS_WAR="/usr/lib/jenkins/jenkins.war" \
+    JENKINS_USER="jenkins" \
+    JENKINS_GROUP="jenkins" \
     HTTPS_PORT=8443 \
     HTTPS_LISTEN_ADDRESS=0.0.0.0 \
     JAVA_ARGS="-Dcom.sun.akuma.Daemon=daemonized \
     -Djava.awt.headless=true \
     -Djava.net.preferIPv4Stack=true \
     -Djenkins.install.runSetupWizard=false \
-    -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=0 \
-    -DJENKINS_HOME=${JENKINS_HOME}"
+    -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=0"
 
 RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \
@@ -20,22 +32,29 @@ RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
 RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
-RUN mkdir /jenkins ; chown jenkins:jenkins /jenkins ; \
-    mkdir /backups ; chown jenkins:jenkins /backups
+RUN mkdir -p /jenkins/{backups,bin,config,var} 
 
 ADD install_plugins.sh /jenkins/install_plugins.sh
 ADD jenkins-plugins.txt /jenkins/plugins.txt
-
-RUN /bin/sh /jenkins/install_plugins.sh ; chown -R jenkins:jenkins /jenkins
-
-# Location of the keystore
-VOLUME /jenkins/keystore.jks
-
-#EXPOSE ${HTTPS_PORT}
-EXPOSE 8443
+RUN /bin/sh /jenkins/install_plugins.sh
 
 ADD startup.sh /jenkins/startup.sh
+RUN chmod a+x /jenkins/startup.sh
 
-USER jenkins
+RUN ln -s $JENKINS_ROOT/secrets $JENKINS_ROOT/config/secrets
+RUN /usr/bin/sed -i \
+    -e "/buildsDir/s|>.*<|>$JENKINS_ROOT/var/builds/\${ITEM_FULL_NAME}<|" \
+    -e "/workspaceDir/s|>.*<|>$JENKINS_ROOT/var/workspaces/\${ITEM_FULL_NAME}<|" \
+    ${JENKINS_HOME}/config.xml
+ADD periodicBackup.xml /jenkins/config/periodicBackup.xml
 
-CMD /bin/sh /jenkins/startup.sh daemon
+# Location of the keystore
+VOLUME /jenkins/var/builds
+VOLUME /jenkins/var/workspaces
+VOLUME /jenkins/secrets
+VOLUME /jenkins/keystore.jks
+
+EXPOSE 8443
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD /jenkins/startup.sh

@@ -7,13 +7,16 @@ build:
 	docker build -t markllama/cd-jenkins .
 
 clean:
-	docker rm -f jenkins
+	-docker rm -f jenkins
 
-run:
+run: volumes
 	docker run -it --rm \
 	--name jenkins \
 	--net=host \
 	--volume $(KEYSTORE_FILE):/jenkins/keystore.jks:z \
+	--volume jenkins-secrets:/jenkins/secrets \
+	--volume jenkins-builds:/jenkins/var/builds \
+	--volume jenkins-workspaces:/jenkins/var/workspaces \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
@@ -22,4 +25,12 @@ run:
 join:
 	docker exec -it jenkins /bin/bash
 
+volumes:
+	docker volume create jenkins-secrets 
+	docker volume create jenkins-builds
+	docker volume create jenkins-workspaces
 
+clean-volumes: clean
+	docker volume rm jenkins-secrets
+	docker volume rm jenkins-builds
+	docker volume rm jenkins-workspaces

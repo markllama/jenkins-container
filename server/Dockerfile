@@ -49,6 +49,7 @@ RUN /usr/bin/sed -i \
 ADD periodicBackup.xml /jenkins/config/periodicBackup.xml
 
 # Location of the keystore
+VOLUME /jenkins/var/backups
 VOLUME /jenkins/var/builds
 VOLUME /jenkins/var/workspaces
 VOLUME /jenkins/secrets

@@ -61,6 +61,7 @@ redhat-ci-plugin
 resource-disposer
 role-strategy
 scm-api
+scm-sync-configuration
 script-security
 ssh-agent
 ssh-credentials

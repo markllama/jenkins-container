@@ -26,13 +26,14 @@ HTTPS_CONFIG="--httpPort=-1
 --httpsKeyStore=${HTTPS_KEYSTORE}
 --httpsKeyStorePassword=${HTTPS_KEYSTORE_PASSWORD}"
 
+echo "--- $(date --rfc-3339=seconds) PREPARING CONTAINER ---"
+
 if [ $JENKINS_UID -ne $(id -u ${JENKINS_USER}) ] ; then
     usermod -u ${JENKINS_UID} ${JENKINS_USER}
 fi
 
 if [ $JENKINS_GID -ne $(id -g ${JENKINS_USER}) ] ; then
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
-    usermod -g ${JENKINS_GID} ${JENKINS_USER}
 fi
 
 [ -d ${JENKINS_ROOT}/var/builds ] || mkdir -p ${JENKINS_ROOT}/var/builds
@@ -51,5 +52,8 @@ chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/var/builds
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/var/workspaces
 
 cd ${JENKINS_HOME}
+
+echo "--- $(date --rfc-3339=seconds) STARTING JENKINS ---"
+
 exec gosu ${JENKINS_USER} \
      /usr/bin/java ${JAVA_ARGS} -jar ${JENKINS_WAR} ${HTTPS_CONFIG}

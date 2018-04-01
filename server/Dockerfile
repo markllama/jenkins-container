@@ -1,6 +1,6 @@
 # A Jenkins server
-#FROM centos
-FROM rhel7
+FROM centos
+#FROM rhel7
 
 ARG TINI_VERSION=v0.17.0
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/
@@ -13,11 +13,13 @@ ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
 
 ARG JENKINS_ROOT="/jenkins"
+ARG JENKINS_HTTPS_PORT=8443
+
 ENV JENKINS_HOME="$JENKINS_ROOT/config" \
     JENKINS_WAR="/usr/lib/jenkins/jenkins.war" \
     JENKINS_USER="jenkins" \
     JENKINS_GROUP="jenkins" \
-    HTTPS_PORT=8443 \
+    HTTPS_PORT=$JENKINS_HTTPS_PORT \
     HTTPS_LISTEN_ADDRESS=0.0.0.0 \
     JAVA_ARGS="-Dcom.sun.akuma.Daemon=daemonized \
     -Djava.awt.headless=true \
@@ -55,7 +57,7 @@ VOLUME /jenkins/var/workspaces
 VOLUME /jenkins/secrets
 VOLUME /jenkins/keystore.jks
 
-EXPOSE 8443
+EXPOSE $JENKINS_HTTPS_PORT
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD /jenkins/startup.sh

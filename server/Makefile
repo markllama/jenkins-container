@@ -14,7 +14,7 @@ run: volumes
 	--name jenkins \
 	--net=host \
 	--volume $(KEYSTORE_FILE):/jenkins/keystore.jks:z \
-	--volume jenkins-backups:/jenkins/backups \
+	--volume `pwd`/backups:/jenkins/backups:z \
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
 	--volume jenkins-workspaces:/jenkins/var/workspaces \
@@ -28,6 +28,7 @@ rund: volumes
 	--name jenkins \
 	--net=host \
 	--volume $(KEYSTORE_FILE):/jenkins/keystore.jks:z \
+	--volume `pwd`/backups:/jenkins/backups:z \
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
 	--volume jenkins-workspaces:/jenkins/var/workspaces \

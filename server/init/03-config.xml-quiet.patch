@@ -1,0 +1,10 @@
+--- before/config.xml	2018-05-10 20:34:23.000000000 -0400
++++ after/config.xml	2018-05-10 20:36:41.000000000 -0400
+@@ -17,6 +17,7 @@
+   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+   <clouds/>
++  <quietPeriod>5</quietPeriod>
+   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
+   <views>
+     <hudson.model.AllView>

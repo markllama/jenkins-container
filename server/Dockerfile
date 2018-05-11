@@ -31,7 +31,8 @@ RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \
     rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 
-RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation ; \
+RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation; \
+    yum -y install patch ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 RUN mkdir -p /jenkins/{backups,bin,config,var}  ; \
@@ -44,16 +45,27 @@ RUN /bin/sh /jenkins/install_plugins.sh
 ADD startup.sh /jenkins/startup.sh
 RUN chmod a+x /jenkins/startup.sh
 
+RUN cp /jenkins/config/config.xml /jenkins/config/config.xml.orig
+
 RUN /usr/bin/sed -i \
     -e "/buildsDir/s|>.*<|>$JENKINS_ROOT/var/builds/\${ITEM_FULL_NAME}<|" \
-    -e "/workspaceDir/s|>.*<|>$JENKINS_ROOT/var/workspaces/\${ITEM_FULL_NAME}<|" \
+    -e "/workspaceDir/s|>.*<|>$JENKINS_ROOT/var/workspace/\${ITEM_FULL_NAME}<|" \
     ${JENKINS_HOME}/config.xml
+    
+ADD init/* /jenkins/config/
+RUN patch < /jenkins/config/01-config.xml-csrf.patch /jenkins/config/config.xml
+RUN patch < /jenkins/config/02-config.xml-safe-agent-protocols.patch \
+    /jenkins/config/config.xml
+ADD init/baseurl/* /jenkins/config/
+RUN patch < /jenkins/config/03-config.xml-quiet.patch /jenkins/config/config.xml
+RUN patch < /jenkins/config/04-config.xml-security.patch \
+    /jenkins/config/config.xml
 ADD periodicBackup.xml /jenkins/config/periodicBackup.xml
 
 # Location of the keystore
 VOLUME /jenkins/var/backups
 VOLUME /jenkins/var/builds
-VOLUME /jenkins/var/workspaces
+VOLUME /jenkins/var/workspace
 VOLUME /jenkins/secrets
 VOLUME /jenkins/keystore.jks
 

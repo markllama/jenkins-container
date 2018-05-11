@@ -1,0 +1,17 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<com.sonymobile.jenkins.plugins.kerberossso.PluginImpl plugin="kerberos-sso@1.4">
+  <enabled>false</enabled>
+  <accountName>Service account</accountName>
+  <redirectEnabled>false</redirectEnabled>
+  <redirect>yourdomain.com</redirect>
+  <krb5Location>/etc/krb5.conf</krb5Location>
+  <loginLocation>/etc/login.conf</loginLocation>
+  <loginServerModule>spnego-server</loginServerModule>
+  <loginClientModule>spnego-client</loginClientModule>
+  <anonymousAccess>false</anonymousAccess>
+  <allowLocalhost>true</allowLocalhost>
+  <allowBasic>true</allowBasic>
+  <allowDelegation>false</allowDelegation>
+  <allowUnsecureBasic>true</allowUnsecureBasic>
+  <promptNtlm>false</promptNtlm>
+</com.sonymobile.jenkins.plugins.kerberossso.PluginImpl>

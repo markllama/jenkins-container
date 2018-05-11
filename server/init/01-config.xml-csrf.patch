@@ -1,0 +1,21 @@
+--- before/config.xml	2018-05-10 19:03:58.000000000 -0400
++++ after/config.xml	2018-05-10 19:07:49.000000000 -0400
+@@ -12,6 +12,7 @@
+   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
+   <workspaceDir>/jenkins/var/workspaces/${ITEM_FULL_NAME}</workspaceDir>
+   <buildsDir>/jenkins/var/builds/${ITEM_FULL_NAME}</buildsDir>
++  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
+   <jdks/>
+   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+@@ -29,6 +30,9 @@
+   <primaryView>all</primaryView>
+   <slaveAgentPort>0</slaveAgentPort>
+   <label></label>
++  <crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer">
++    <excludeClientIPFromCrumb>false</excludeClientIPFromCrumb>
++  </crumbIssuer>
+   <nodeProperties/>
+   <globalNodeProperties/>
+ </hudson>
+\ No newline at end of file

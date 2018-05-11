@@ -53,6 +53,11 @@ chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/var/workspaces
 
 cd ${JENKINS_HOME}
 
+# Enable master/slave security 
+cat > secrets/slave-to-master-security-kill-switch <<EOF
+false
+EOF
+
 echo "--- $(date --rfc-3339=seconds) STARTING JENKINS ---"
 
 exec gosu ${JENKINS_USER} \

@@ -1,0 +1,4 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<com.redhat.jenkins.plugins.ci.GlobalCIConfiguration plugin="jms-messaging@1.0.36">
+  <configs/>
+</com.redhat.jenkins.plugins.ci.GlobalCIConfiguration>

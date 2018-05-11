@@ -17,7 +17,7 @@ run: volumes
 	--volume `pwd`/backups:/jenkins/backups:z \
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
-	--volume jenkins-workspaces:/jenkins/var/workspaces \
+	--volume jenkins-workspaces:/jenkins/var/workspace \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
@@ -31,7 +31,7 @@ rund: volumes
 	--volume `pwd`/backups:/jenkins/backups:z \
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
-	--volume jenkins-workspaces:/jenkins/var/workspaces \
+	--volume jenkins-workspaces:/jenkins/var/workspace \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \

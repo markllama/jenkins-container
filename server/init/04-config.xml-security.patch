@@ -1,0 +1,15 @@
+diff -u before/config.xml after/config.xml
+--- before/config.xml	2018-05-10 20:53:11.000000000 -0400
++++ after/config.xml	2018-05-10 20:56:51.000000000 -0400
+@@ -7,7 +7,10 @@
+   <mode>NORMAL</mode>
+   <useSecurity>true</useSecurity>
+   <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
+-  <securityRealm class="hudson.security.SecurityRealm$None"/>
++  <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
++    <disableSignup>false</disableSignup>
++    <enableCaptcha>false</enableCaptcha>
++  </securityRealm>
+   <disableRememberMe>false</disableRememberMe>
+   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
+   <workspaceDir>/jenkins/var/workspaces/${ITEM_FULL_NAME}</workspaceDir>

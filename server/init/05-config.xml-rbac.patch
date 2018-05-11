@@ -1,0 +1,61 @@
+--- before/config.xml	2018-05-10 21:42:52.000000000 -0400
++++ after/config.xml	2018-05-10 22:13:43.000000000 -0400
+@@ -8,7 +8,57 @@
+   <numExecutors>2</numExecutors>
+   <mode>NORMAL</mode>
+   <useSecurity>true</useSecurity>
+-  <authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/>
++  <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
++    <roleMap type="globalRoles">
++      <role name="admin" pattern=".*">
++        <permissions>
++          <permission>hudson.model.View.Delete</permission>
++          <permission>hudson.model.Computer.Connect</permission>
++          <permission>hudson.model.Run.Delete</permission>
++          <permission>hudson.model.Hudson.UploadPlugins</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains</permission>
++          <permission>hudson.model.Computer.Create</permission>
++          <permission>hudson.model.View.Configure</permission>
++          <permission>hudson.model.Hudson.ConfigureUpdateCenter</permission>
++          <permission>hudson.model.Computer.Build</permission>
++          <permission>hudson.model.Item.Configure</permission>
++          <permission>hudson.model.Hudson.Administer</permission>
++          <permission>hudson.model.Item.Cancel</permission>
++          <permission>hudson.model.Item.Read</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View</permission>
++          <permission>hudson.model.Computer.Delete</permission>
++          <permission>hudson.model.Item.Build</permission>
++          <permission>hudson.model.Item.ExtendedRead</permission>
++          <permission>hudson.scm.SCM.Tag</permission>
++          <permission>hudson.model.Item.Move</permission>
++          <permission>hudson.model.Item.Discover</permission>
++          <permission>hudson.model.Hudson.Read</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update</permission>
++          <permission>hudson.model.Item.Create</permission>
++          <permission>hudson.model.Item.Workspace</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete</permission>
++          <permission>hudson.model.Computer.Provision</permission>
++          <permission>hudson.model.Run.Replay</permission>
++          <permission>hudson.model.Item.WipeOut</permission>
++          <permission>hudson.model.View.Read</permission>
++          <permission>hudson.model.Hudson.RunScripts</permission>
++          <permission>hudson.model.View.Create</permission>
++          <permission>hudson.model.Computer.ExtendedRead</permission>
++          <permission>hudson.model.Item.Delete</permission>
++          <permission>hudson.model.Computer.Configure</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create</permission>
++          <permission>hudson.model.Computer.Disconnect</permission>
++          <permission>hudson.model.Run.Artifacts</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.UseItem</permission>
++          <permission>com.cloudbees.plugins.credentials.CredentialsProvider.UseOwn</permission>
++          <permission>hudson.model.Run.Update</permission>
++        </permissions>
++        <assignedSIDs>
++          <sid>anonymous</sid>
++        </assignedSIDs>
++      </role>
++    </roleMap>
++  </authorizationStrategy>
+   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+     <disableSignup>false</disableSignup>
+     <enableCaptcha>false</enableCaptcha>

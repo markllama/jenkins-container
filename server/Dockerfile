@@ -60,6 +60,14 @@ ADD init/baseurl/* /jenkins/config/
 RUN patch < /jenkins/config/03-config.xml-quiet.patch /jenkins/config/config.xml
 RUN patch < /jenkins/config/04-config.xml-security.patch \
     /jenkins/config/config.xml
+RUN patch < /jenkins/config/05-config.xml-rbac.patch \
+    /jenkins/config/config.xml
+RUN patch < /jenkins/config/06-config.xml-root-check.patch \
+    /jenkins/config/config.xml
+
+RUN mkdir -p /jenkins/config/users/admin
+ADD init/users/admin.xml /jenkins/config/users/admin/config.xml
+
 ADD periodicBackup.xml /jenkins/config/periodicBackup.xml
 
 # Location of the keystore

@@ -21,6 +21,8 @@ run: volumes
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
+	-e SERVER_FQDN=${SERVER_FQDN} \
+	-e ADMIN_EMAIL=${ADMIN_EMAIL} \
 	markllama/cd-jenkins
 
 rund: volumes
@@ -35,6 +37,8 @@ rund: volumes
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
+  -e SERVER_FQDN=${SERVER_FQDN} \
+  -e ADMIN_EMAIL=${ADMIN_EMAIL} \
 	markllama/cd-jenkins
 
 join:

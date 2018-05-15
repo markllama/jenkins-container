@@ -27,6 +27,9 @@ ENV JENKINS_HOME="$JENKINS_ROOT/config" \
     -Djenkins.install.runSetupWizard=false \
     -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=0"
 
+#ENV SERVER_FQDN="" \
+#    ADMIN_EMAIL=""
+
 RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \
     rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
@@ -62,8 +65,8 @@ RUN patch < /jenkins/config/04-config.xml-security.patch \
     /jenkins/config/config.xml
 RUN patch < /jenkins/config/05-config.xml-rbac.patch \
     /jenkins/config/config.xml
-RUN patch < /jenkins/config/06-config.xml-root-check.patch \
-    /jenkins/config/config.xml
+#RUN patch < /jenkins/config/06-config.xml-root-check.patch \
+#    /jenkins/config/config.xml
 
 RUN mkdir -p /jenkins/config/users/admin
 ADD init/users/admin.xml /jenkins/config/users/admin/config.xml

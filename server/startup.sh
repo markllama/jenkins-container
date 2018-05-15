@@ -1,5 +1,8 @@
 #!/bin/sh
 
+[ -z "$SERVER_FQDN" ] && echo "Missing required value: SERVER_FQDN" && exit 2
+[ -z "$ADMIN_EMAIL" ] && echo "Missing required value: ADMIN_EMAIL" && exit 2
+
 # From container environment
 : "${JENKINS_ROOT:=/jenkins}"
 : "${JENKINS_HOME:=${JENKINS_ROOT}/config}"
@@ -44,6 +47,12 @@ fi
     -e "/buildsDir/s|>.*<|>$JENKINS_ROOT/var/builds/\${ITEM_FULL_NAME}<|" \
     -e "/workspaceDir/s|>.*<|>$JENKINS_ROOT/var/workspaces/\${ITEM_FULL_NAME}<|" \
     ${JENKINS_HOME}/config.xml
+
+/usr/bin/sed \
+    -i \
+    -e "/jenkinsUrl/s|>.*<|>${SERVER_FQDN}<|" \
+    -e "/adminAddress/s|>.*<|>${ADMIN_EMAIL}<|" \
+    ${JENKINS_HOME}/jenkins.model.JenkinsLocationConfiguration.xml
 
 chown -R ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_HOME}
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/backups

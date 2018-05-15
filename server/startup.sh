@@ -50,7 +50,7 @@ fi
 
 /usr/bin/sed \
     -i \
-    -e "/jenkinsUrl/s|>.*<|>${SERVER_FQDN}<|" \
+    -e "/jenkinsUrl/s|>.*<|>https://${SERVER_FQDN}:${HTTPS_PORT}<|" \
     -e "/adminAddress/s|>.*<|>${ADMIN_EMAIL}<|" \
     ${JENKINS_HOME}/jenkins.model.JenkinsLocationConfiguration.xml
 

@@ -27,8 +27,8 @@ ENV JENKINS_HOME="$JENKINS_ROOT/config" \
     -Djenkins.install.runSetupWizard=false \
     -Djenkins.branch.WorkspaceLocatorImpl.PATH_MAX=0"
 
-#ENV SERVER_FQDN="" \
-#    ADMIN_EMAIL=""
+ENV SERVER_FQDN="" \
+    ADMIN_EMAIL=""
 
 RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \

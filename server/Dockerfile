@@ -67,6 +67,9 @@ RUN patch < /jenkins/config/05-config.xml-rbac.patch \
     /jenkins/config/config.xml
 #RUN patch < /jenkins/config/06-config.xml-root-check.patch \
 #    /jenkins/config/config.xml
+RUN patch < /jenkins/config/07-config.xml-admin-role.patch \
+    /jenkins/config/config.xml
+
 
 RUN mkdir -p /jenkins/config/users/admin
 ADD init/users/admin.xml /jenkins/config/users/admin/config.xml

@@ -1,0 +1,24 @@
+diff -u before/config.xml after/config.xml
+--- before/config.xml	2018-05-17 14:45:22.000000000 +0000
++++ after/config.xml	2018-05-17 14:57:37.000000000 +0000
+@@ -7,6 +7,7 @@
+   <mode>NORMAL</mode>
+   <useSecurity>true</useSecurity>
+   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
++    <roleMap type="projectRoles"/>
+     <roleMap type="globalRoles">
+       <role name="admin" pattern=".*">
+         <permissions>
+@@ -53,9 +54,11 @@
+         </permissions>
+         <assignedSIDs>
+           <sid>anonymous</sid>
++          <sid>admin</sid>
+         </assignedSIDs>
+       </role>
+     </roleMap>
++    <roleMap type="slaveRoles"/>
+   </authorizationStrategy>
+   <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+     <disableSignup>false</disableSignup>
+Common subdirectories: before/users and after/users

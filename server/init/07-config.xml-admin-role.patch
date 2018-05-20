@@ -1,6 +1,6 @@
 diff -u before/config.xml after/config.xml
---- before/config.xml	2018-05-17 14:45:22.000000000 +0000
-+++ after/config.xml	2018-05-17 14:57:37.000000000 +0000
+--- before/config.xml	2018-05-19 21:08:51.000000000 -0400
++++ after/config.xml	2018-05-19 21:11:33.000000000 -0400
 @@ -7,6 +7,7 @@
    <mode>NORMAL</mode>
    <useSecurity>true</useSecurity>
@@ -9,10 +9,11 @@ diff -u before/config.xml after/config.xml
      <roleMap type="globalRoles">
        <role name="admin" pattern=".*">
          <permissions>
-@@ -53,9 +54,11 @@
+@@ -52,10 +53,11 @@
+           <permission>hudson.model.Run.Update</permission>
          </permissions>
          <assignedSIDs>
-           <sid>anonymous</sid>
+-          <sid>anonymous</sid>
 +          <sid>admin</sid>
          </assignedSIDs>
        </role>

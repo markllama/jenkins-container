@@ -22,6 +22,7 @@ git-client
 github-api
 github-branch-source
 github
+github-oauth
 git
 git-server
 gradle

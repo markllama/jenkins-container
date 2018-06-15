@@ -6,35 +6,35 @@ set -x
 : "${MASTER_PORT:=8443}"
 [ -z "${AGENT_NAME}" ] && echo "missing required value AGENT_NAME" && exit 2
 : "${AGENT_SECRET:=''}"
+#: "${AGENT_PORT:=35124}"
+
+: "${JENKINS_ROOT:=/jenkins}"
+: "${JENKINS_HOME:=${JENKINS_ROOT}/agent}"
 : "${JENKINS_USER:=jenkins}"
 : "${JENKINS_UID:=$(id -u ${JENKINS_USER})}"
 : "${JENKINS_GROUP:=jenkins}"
 : "${JENKINS_GID:=$(id -u ${JENKINS_GROUP})}"
 
+: "${JENKINS_AGENT_JAR_URL:=https://${MASTER_SERVER}:${MASTER_PORT}/jnlpJars/agent.jar}"
+: "${JENKINS_AGENT_JAR:=${JENKINS_ROOT}/agent.jar}"
 
 SERVER_URL=https://${MASTER_SERVER}:${MASTER_PORT}
-JARFILE_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp
+JAVAWS_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp
 
 [ -n "${AGENT_SECRET}" ] && SECRET_ARG="-secret ${AGENT_SECRET}"
+: "${JENKINS_AGENT_ARGS:=-noCertificateCheck
+     -jnlpUrl ${JAVAWS_URL}
+     -workDir ${JENKINS_HOME}
+     ${SECRET_ARG}}"
 
-if [ $JENKINS_UID -ne $(id -u ${JENKINS_USER}) ] ; then
+[ $JENKINS_UID -ne $(id -u ${JENKINS_USER}) ] && \
     usermod -u ${JENKINS_UID} ${JENKINS_USER}
-fi
-
-if [ $JENKINS_GID -ne $(id -g ${JENKINS_USER}) ] ; then
+[ $JENKINS_GID -ne $(id -g ${JENKINS_USER}) ] &&
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
-fi
 
-cd /jenkins
-
-curl --insecure --silent \
-     https://${MASTER_SERVER}:${MASTER_PORT}/jnlpJars/agent.jar \
-     > /jenkins/agent.jar
+curl --insecure --silent ${JENKINS_AGENT_JAR_URL} > ${JENKINS_AGENT_JAR}
 
 # Error if the curl fails
-
-exec java -jar /jenkins/agent.jar \
-     -noCertificateCheck \
-     -jnlpUrl ${JARFILE_URL} \
-     -workDir "/jenkins/agent" \
-     ${SECRET_ARG}
+cd ${JENKINS_HOME}
+exec gosu ${JENKINS_USER} \
+     /usr/bin/java -jar ${JENKINS_AGENT_JAR} ${JENKINS_AGENT_ARGS}

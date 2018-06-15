@@ -12,6 +12,8 @@ run:
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \
 	-e AGENT_SECRET=${AGENT_SECRET} \
+	-e JENKINS_UID=`id -u` \
+	-e JENKINS_GID=`id -g` \
 	markllama/cd-jenkins-agent
 
 rund:
@@ -20,4 +22,6 @@ rund:
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \
 	-e AGENT_SECRET=${AGENT_SECRET} \
+	-e JENKINS_UID=`id -u` \
+	-e JENKINS_GID=`id -g` \
 	markllama/cd-jenkins-agent

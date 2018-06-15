@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x 
 
 [ -z "$SERVER_FQDN" ] && echo "Missing required value: SERVER_FQDN" && exit 2
 [ -z "$ADMIN_EMAIL" ] && echo "Missing required value: ADMIN_EMAIL" && exit 2
@@ -16,6 +17,8 @@
 : "${HTTPS_KEYSTORE:=${JENKINS_ROOT}/keystore.jks}"
 : "${HTTPS_KEYSTORE_PASSWORD:=${KEYSTORE_PASSWORD}}"
 
+: "${AGENT_PORT:=35124}"
+
 : "${JAVA_ARGS:=Dcom.sun.akuma.Daemon=daemonized
 -Djava.awt.headless=true
 -Djava.net.preferIPv4Stack=true
@@ -31,13 +34,11 @@ HTTPS_CONFIG="--httpPort=-1
 
 echo "--- $(date --rfc-3339=seconds) PREPARING CONTAINER ---"
 
-if [ $JENKINS_UID -ne $(id -u ${JENKINS_USER}) ] ; then
+[ $JENKINS_UID -eq $(id -u ${JENKINS_USER}) ] ||
     usermod -u ${JENKINS_UID} ${JENKINS_USER}
-fi
-
-if [ $JENKINS_GID -ne $(id -g ${JENKINS_USER}) ] ; then
+[ $JENKINS_GID -eq $(id -g ${JENKINS_USER}) ] || 
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
-fi
+
 
 [ -d ${JENKINS_ROOT}/var/builds ] || mkdir -p ${JENKINS_ROOT}/var/builds
 [ -d ${JENKINS_ROOT}/var/workspaces ] || mkdir -p ${JENKINS_ROOT}/var/workspaces
@@ -46,6 +47,7 @@ fi
     -i \
     -e "/buildsDir/s|>.*<|>$JENKINS_ROOT/var/builds/\${ITEM_FULL_NAME}<|" \
     -e "/workspaceDir/s|>.*<|>$JENKINS_ROOT/var/workspaces/\${ITEM_FULL_NAME}<|" \
+    -e "/<slaveAgentPort>/s|>.*<|>${AGENT_PORT}<|" \
     ${JENKINS_HOME}/config.xml
 
 /usr/bin/sed \

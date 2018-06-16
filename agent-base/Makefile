@@ -9,6 +9,7 @@ clean:
 run:
 	docker run -it --rm \
 	--name jenkins-agent \
+	--volume ~/.ssh:/jenkins/agent/.ssh:z \
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \
 	-e AGENT_SECRET=${AGENT_SECRET} \
@@ -19,6 +20,7 @@ run:
 rund:
 	docker run -d \
 	--name jenkins-agent \
+	--volume ~/.ssh:/jenkins/agent/.ssh:z \
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \
 	-e AGENT_SECRET=${AGENT_SECRET} \

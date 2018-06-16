@@ -10,6 +10,8 @@ set -x
 
 : "${JENKINS_ROOT:=/jenkins}"
 : "${JENKINS_HOME:=${JENKINS_ROOT}/agent}"
+: "${JENKINS_SSH_DIR:=${JENKINS_HOME}/.ssh}"
+
 : "${JENKINS_USER:=jenkins}"
 : "${JENKINS_UID:=$(id -u ${JENKINS_USER})}"
 : "${JENKINS_GROUP:=jenkins}"
@@ -31,6 +33,10 @@ JAVAWS_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp
     usermod -u ${JENKINS_UID} ${JENKINS_USER}
 [ $JENKINS_GID -ne $(id -g ${JENKINS_USER}) ] &&
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
+chown -R jenkins:jenkins ${JENKINS_HOME}
+
+ls -laZ ${JENKINS_HOME}
+ls -lZ ${JENKINS_SSH_DIR}
 
 curl --insecure --silent ${JENKINS_AGENT_JAR_URL} > ${JENKINS_AGENT_JAR}
 

@@ -11,7 +11,14 @@ ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
 ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
 
+RUN yum -y install epel-release \
+    yum -y clean all ; rm -rf /var/cache/yum
+
 RUN yum -y install java-1.8.0-openjdk git krb5-workstation \
+    yum -y clean all ; rm -rf /var/cache/yum
+
+ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli"
+RUN yum -y install ${BUILD_PACKAGES} \
     yum -y clean all ; rm -rf /var/cache/yum
 
 ARG JENKINS_ROOT="/jenkins"

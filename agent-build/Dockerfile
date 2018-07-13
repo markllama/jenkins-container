@@ -17,8 +17,14 @@ RUN yum -y install epel-release \
 RUN yum -y install java-1.8.0-openjdk git krb5-workstation \
     yum -y clean all ; rm -rf /var/cache/yum
 
-ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli groovy"
+ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli docker groovy"
 RUN yum -y install ${BUILD_PACKAGES} \
+    yum -y clean all ; rm -rf /var/cache/yum
+
+ARG RCM_TOOLS_URL=http://download.devel.redhat.com/rel-eng/RCMTOOLS
+ARG RCM_TOOLS_REPO_FILE=rcm-tools-rhel-7-server.repo
+ADD ${RCM_TOOLS_URL}/${RCM_TOOLS_REPO_FILE} /etc/yum.repos.d/${RCM_TOOLS_REPO_FILE}
+RUN yum -y install brewkoji \
     yum -y clean all ; rm -rf /var/cache/yum
 
 ARG JENKINS_ROOT="/jenkins"
@@ -40,6 +46,9 @@ RUN useradd --create-home --home-dir ${JENKINS_ROOT}/agent \
 ADD startup.sh ${JENKINS_ROOT}/startup.sh
 
 VOLUME ${JENKINS_SSH_DIR}
+
+# Mount host docker inside the container
+VOLUME /var/run/docker.sock
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD /jenkins/startup.sh

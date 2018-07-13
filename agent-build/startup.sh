@@ -45,6 +45,13 @@ EOF
 
 chown -R jenkins:jenkins ${JENKINS_HOME}
 
+if [ -n "${DOCKER_GID}" ] ; then
+    sed -i -e 's/dockerroot/docker/' /etc/passwd
+    sed -i -e 's/dockerroot/docker/' /etc/group
+    groupmod -g ${DOCKER_GID} docker
+    usermod --append --groups docker ${JENKINS_USER}
+fi
+
 curl --insecure --silent ${JENKINS_AGENT_JAR_URL} > ${JENKINS_AGENT_JAR}
 
 # Error if the curl fails

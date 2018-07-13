@@ -26,6 +26,7 @@ github-oauth
 git
 git-server
 gradle
+groovy
 handlebars
 icon-shim
 jackson2-api

@@ -29,6 +29,8 @@ gradle
 groovy
 handlebars
 icon-shim
+instant-messaging
+IRC
 jackson2-api
 jms-messaging
 jquery-detached

@@ -21,6 +21,11 @@ ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli docker groovy bsdtar krb5-d
 RUN yum -y install ${BUILD_PACKAGES} \
     yum -y clean all ; rm -rf /var/cache/yum
 
+ARG REMOTE_PACKAGES="http://cbs.centos.org/kojifiles/packages/goversioninfo/0.1/1.el7/x86_64/goversioninfo-0.1-1.el7.x86_64.rpm"
+RUN yum -y install ${REMOTE_PACKAGES} \
+    yum -y clean all ; rm -rf /var/cache/yum
+
+
 ARG RCM_TOOLS_URL=http://download.devel.redhat.com/rel-eng/RCMTOOLS
 ARG RCM_TOOLS_REPO_FILE=rcm-tools-rhel-7-server.repo
 ADD ${RCM_TOOLS_URL}/${RCM_TOOLS_REPO_FILE} /etc/yum.repos.d/${RCM_TOOLS_REPO_FILE}

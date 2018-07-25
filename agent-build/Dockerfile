@@ -17,7 +17,7 @@ RUN yum -y install epel-release \
 RUN yum -y install java-1.8.0-openjdk git krb5-workstation \
     yum -y clean all ; rm -rf /var/cache/yum
 
-ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli docker groovy bsdtar krb5-devel"
+ARG BUILD_PACKAGES="golang tito npm nodejs-grunt-cli docker groovy bsdtar krb5-devel make which"
 RUN yum -y install ${BUILD_PACKAGES} \
     yum -y clean all ; rm -rf /var/cache/yum
 

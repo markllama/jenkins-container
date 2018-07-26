@@ -1,7 +1,8 @@
 # A Jenkins Slave using JNLP
-FROM centos
+#FROM centos
+FROM rhel7
 
-ARG TINI_VERSION=v0.17.0
+ARG TINI_VERSION=v0.18.0
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/
 ADD $TINI_URL/$TINI_VERSION/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
@@ -11,7 +12,7 @@ ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
 ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
 
-RUN yum -y install java-1.8.0-openjdk git krb5-workstation \
+RUN yum -y install java-1.8.0-openjdk git krb5-workstation ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 ARG JENKINS_ROOT="/jenkins"

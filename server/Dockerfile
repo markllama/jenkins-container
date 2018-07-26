@@ -1,8 +1,8 @@
 # A Jenkins server
-FROM centos
-#FROM rhel7
+#FROM centos
+FROM rhel7
 
-ARG TINI_VERSION=v0.17.0
+ARG TINI_VERSION=v0.18.0
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/
 ADD $TINI_URL/$TINI_VERSION/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini

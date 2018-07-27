@@ -12,8 +12,17 @@ ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
 ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
 
-RUN yum -y install epel-release ; \
+ARG EPEL_RELEASE_RPM=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN if grep -q 'Red Hat Enterprise Linux' /etc/redhat-release ; then \
+      yum -y install ${EPEL_RELEASE_RPM} ;\
+    else \
+      yum -y install epel-release ; \
+    fi ; \
     yum -y clean all ; rm -rf /var/cache/yum
+
+RUN grep -q 'Red Hat Enterprise Linux' /etc/redhat-release && \
+    yum-config-manager --enable rhel-7-server-extras-rpms && \
+    yum-config-manager --enable rhel-7-server-optional-rpms
 
 RUN yum -y install java-1.8.0-openjdk git krb5-workstation ; \
     yum -y clean all ; rm -rf /var/cache/yum
@@ -26,7 +35,6 @@ RUN yum -y install ${BUILD_PACKAGES} ; \
 ARG REMOTE_PACKAGES="http://cbs.centos.org/kojifiles/packages/goversioninfo/0.1/1.el7/x86_64/goversioninfo-0.1-1.el7.x86_64.rpm"
 RUN yum -y install ${REMOTE_PACKAGES} ; \
     yum -y clean all ; rm -rf /var/cache/yum
-
 
 ARG RCM_TOOLS_URL=http://download.devel.redhat.com/rel-eng/RCMTOOLS
 ARG RCM_TOOLS_REPO_FILE=rcm-tools-rhel-7-server.repo

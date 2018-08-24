@@ -34,7 +34,7 @@ RUN curl https://pkg.jenkins.io/redhat/jenkins.repo \
     > /etc/yum.repos.d/jenkins.repo ; \
     rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 
-RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation; \
+RUN yum -y install java-1.8.0-openjdk jenkins git krb5-workstation ; \
     yum -y install patch ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
@@ -65,6 +65,7 @@ RUN patch < /jenkins/config/04-config.xml-security.patch \
     /jenkins/config/config.xml
 RUN patch < /jenkins/config/05-config.xml-rbac.patch \
     /jenkins/config/config.xml
+# zero out users/admin/config.xml:<tokenList/>
 #RUN patch < /jenkins/config/06-config.xml-root-check.patch \
 #    /jenkins/config/config.xml
 RUN patch < /jenkins/config/07-config.xml-admin-role.patch \
@@ -82,6 +83,7 @@ VOLUME /jenkins/var/builds
 VOLUME /jenkins/var/workspace
 VOLUME /jenkins/secrets
 VOLUME /jenkins/keystore.jks
+VOLUME /var/lib/jenkins/.ssh/id_rsa
 
 EXPOSE $JENKINS_HTTPS_PORT
 

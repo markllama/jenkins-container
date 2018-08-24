@@ -56,6 +56,7 @@ echo "--- $(date --rfc-3339=seconds) PREPARING CONTAINER ---"
     -e "/adminAddress/s|>.*<|>${ADMIN_EMAIL}<|" \
     ${JENKINS_HOME}/jenkins.model.JenkinsLocationConfiguration.xml
 
+mkdir -p ${JENKINS_HOME}/.ssh
 chown -R ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_HOME}
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/backups
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/secrets

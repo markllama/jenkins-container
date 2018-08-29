@@ -1,0 +1,20 @@
+= Building the Jenkins Containers
+
+* Docker enabled and running
+
+== Select Base OS Image
+
+Edit the Dockerfiles in server/, agent-base/ and agent-build/. Check the FROM
+line to select the base OS image.
+
+* rhel7
+* centos7
+* fedora
+
+== Build Server Images
+
+----
+(cd server ; make build)
+(cd agent-base ; make build)
+(cd agent-build ; make build)
+----   

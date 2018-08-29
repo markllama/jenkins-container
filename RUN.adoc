@@ -1,0 +1,26 @@
+= Running a Jenkins Service
+
+== Environment Variables
+
+=== Server Controls
+----
+export SERVER_FQDN=hp-blade15.cloud.lab.eng.bos.redhat.com
+export ADMIN_EMAIL=mlamouri-jenkins@redhat.com
+export KEYSTORE_FILE=/home/bos/mlamouri/jenkins-container/hp-blade15.cd.jks
+----
+
+=== Agent Controls
+
+----
+export MASTER_SERVER=hp-blade15.cloud.lab.eng.bos.redhat.com
+export AGENT_NAME=container
+export AGENT_SECRET=306aba84b7758650cb952de7c64de5ae9fa6c81b22adbf1b7ecf22ac3598
+ee31
+----
+
+
+== Starting the Server
+
+----
+(cd server ; make -e rund)
+----

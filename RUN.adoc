@@ -1,0 +1,32 @@
+= Running a Jenkins Service
+
+== Environment Variables
+
+=== Server Controls
+----
+export SERVER_FQDN=jenkins.example.com
+export ADMIN_EMAIL=jenkins-admin@example.com
+export KEYSTORE_FILE=/home/jenkins/keystore.jks
+----
+
+=== Agent Controls
+
+----
+export MASTER_SERVER=jenkins.example.com
+export AGENT_NAME=container1
+export AGENT_SECRET=<hash string from master>
+----
+
+
+== Starting the Server
+
+----
+(cd server ; make -e rund)
+----
+
+
+== Starting an Agent
+
+----
+(cd agent-build ; make -e rund)
+----

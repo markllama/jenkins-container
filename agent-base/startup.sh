@@ -8,6 +8,10 @@ set -x
 : "${AGENT_SECRET:=''}"
 #: "${AGENT_PORT:=35124}"
 
+: "${KRB5_REALM}:=''}"
+: "${KRB5_KDC}:=''}"
+: "${KRB5_ADMIN_SERVER}:=''}"
+
 : "${JENKINS_ROOT:=/jenkins}"
 : "${JENKINS_HOME:=${JENKINS_ROOT}/agent}"
 : "${JENKINS_SSH_DIR:=${JENKINS_HOME}/.ssh}"
@@ -19,6 +23,19 @@ set -x
 
 : "${JENKINS_AGENT_JAR_URL:=https://${MASTER_SERVER}:${MASTER_PORT}/jnlpJars/agent.jar}"
 : "${JENKINS_AGENT_JAR:=${JENKINS_ROOT}/agent.jar}"
+
+if [ -n "${KRB5_REALM}" ] ; then
+
+    sed -i -e '/default_ccache_name/s/^/#/' /etc/krb5.conf
+    sed -i -e "/default_realm/s/^.*$/ default_realm = ${KRB5_REALM}/" /etc/krb5.conf
+    cat <<EOF > /etc/krb5.conf.d/${KRB5_REALM}.conf
+[realms]
+${KRB5_REALM} = {
+   kdc = ${KRB5_KDC}
+   admin_server = ${KRB5_ADMIN_SERVER}
+}
+EOF
+fi
 
 SERVER_URL=https://${MASTER_SERVER}:${MASTER_PORT}
 JAVAWS_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp

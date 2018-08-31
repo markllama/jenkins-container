@@ -22,6 +22,9 @@ run:
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
   -e DOCKER_GID=${DOCKER_GID} \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	${IMAGE_NAME}
 
 rund:
@@ -35,4 +38,7 @@ rund:
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
   -e DOCKER_GID=${DOCKER_GID} \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	${IMAGE_NAME}

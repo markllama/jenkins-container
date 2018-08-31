@@ -39,7 +39,7 @@ RUN yum -y install ${REMOTE_PACKAGES} ; \
 ARG RCM_TOOLS_URL=http://download.devel.redhat.com/rel-eng/RCMTOOLS
 ARG RCM_TOOLS_REPO_FILE=rcm-tools-rhel-7-server.repo
 ADD ${RCM_TOOLS_URL}/${RCM_TOOLS_REPO_FILE} /etc/yum.repos.d/${RCM_TOOLS_REPO_FILE}
-RUN yum -y install brewkoji ; \
+RUN yum -y install brewkoji rhpkg ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 # Now some.. stuff to make stuff build. Don't ask.

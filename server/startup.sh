@@ -16,6 +16,9 @@ set -x
 : "${HTTPS_LISTEN_ADDRESS:=0.0.0.0}"
 : "${HTTPS_KEYSTORE:=${JENKINS_ROOT}/keystore.jks}"
 : "${HTTPS_KEYSTORE_PASSWORD:=${KEYSTORE_PASSWORD}}"
+: "${KRB5_REALM}:=''}"
+: "${KRB5_KDC}:=''}"
+: "${KRB5_ADMIN_SERVER}:=''}"
 
 : "${AGENT_PORT:=35124}"
 
@@ -39,6 +42,18 @@ echo "--- $(date --rfc-3339=seconds) PREPARING CONTAINER ---"
 [ $JENKINS_GID -eq $(id -g ${JENKINS_USER}) ] || 
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
 
+if [ -n "${KRB5_REALM}" ] ; then
+
+    sed -i -e '/default_ccache_name/s/^/#/' /etc/krb5.conf
+    sed -i -e "/default_realm/s/^.*$/ default_realm = ${KRB5_REALM}/" /etc/krb5.conf
+    cat <<EOF > /etc/krb5.conf.d/${KRB5_REALM}.conf
+[realms]
+${KRB5_REALM} = {
+   kdc = ${KRB5_KDC}
+   admin_server = ${KRB5_ADMIN_SERVER}
+}
+EOF
+fi
 
 [ -d ${JENKINS_ROOT}/var/builds ] || mkdir -p ${JENKINS_ROOT}/var/builds
 [ -d ${JENKINS_ROOT}/var/workspaces ] || mkdir -p ${JENKINS_ROOT}/var/workspaces
@@ -56,7 +71,6 @@ echo "--- $(date --rfc-3339=seconds) PREPARING CONTAINER ---"
     -e "/adminAddress/s|>.*<|>${ADMIN_EMAIL}<|" \
     ${JENKINS_HOME}/jenkins.model.JenkinsLocationConfiguration.xml
 
-mkdir -p ${JENKINS_HOME}/.ssh
 chown -R ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_HOME}
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/backups
 chown ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_ROOT}/secrets

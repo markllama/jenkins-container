@@ -15,6 +15,9 @@ run:
 	-e AGENT_SECRET=${AGENT_SECRET} \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	markllama/cd-jenkins-agent
 
 rund:
@@ -26,4 +29,7 @@ rund:
 	-e AGENT_SECRET=${AGENT_SECRET} \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	markllama/cd-jenkins-agent

@@ -83,7 +83,7 @@ VOLUME /jenkins/var/builds
 VOLUME /jenkins/var/workspace
 VOLUME /jenkins/secrets
 VOLUME /jenkins/keystore.jks
-VOLUME /var/lib/jenkins/.ssh/id_rsa
+VOLUME /var/lib/jenkins/.ssh
 
 EXPOSE $JENKINS_HTTPS_PORT
 

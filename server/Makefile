@@ -4,7 +4,7 @@ KEYSTORE_FILE = $(PWD)/keystore.jks
 KEYSTORE_PASSWORD = badpassword
 CONFIG_SCM_REPO = git@github.com:markllama/jenkins-config.git
 CONFIG_SCM_USER = markllama
-CONFIG_SCM_KEYFILE = $(HOME)/jenkins-agent-keys/id_rsa
+SSH_KEY_DIR = $(HOME)/jenkins-agent-keys
 
 build:
 	docker build -t markllama/cd-jenkins .
@@ -21,7 +21,7 @@ run: volumes
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
 	--volume jenkins-workspaces:/jenkins/var/workspaces \
-	--volume $(CONFIG_SCM_KEYFILE):/var/lib/jenkins/.ssh/id_rsa:z \
+	--volume $(SSH_KEY_DIR):/var/lib/jenkins/.ssh:z \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
@@ -29,6 +29,9 @@ run: volumes
 	-e ADMIN_EMAIL=${ADMIN_EMAIL} \
   -e CONFIG_SCM_REPO=$(CONFIG_SCM_REPO) \
   -e CONFIG_SCM_USER=$(CONFIG_SCM_USER) \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	markllama/cd-jenkins
 
 rund: volumes
@@ -40,7 +43,7 @@ rund: volumes
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
 	--volume `pwd`/workspaces:/jenkins/var/workspaces:z \
-	--volume $(CONFIG_SCM_KEYFILE):/var/lib/jenkins/.ssh/id_rsa:z \
+	--volume $(SSH_KEY_DIR):/var/lib/jenkins/.ssh:z \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
@@ -48,6 +51,9 @@ rund: volumes
   -e ADMIN_EMAIL=${ADMIN_EMAIL} \
   -e CONFIG_SCM_REPO=$(CONFIG_SCM_REPO) \
   -e CONFIG_SCM_USER=$(CONFIG_SCM_USER) \
+  -e KRB5_REALM=$(KRB5_REALM) \
+  -e KRB5_KDC=$(KRB5_KDC) \
+  -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
 	markllama/cd-jenkins
 
 join:

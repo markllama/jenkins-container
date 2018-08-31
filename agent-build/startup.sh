@@ -32,11 +32,18 @@ JAVAWS_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp
 : "${GIT_NAME:='Jenkins Agent'}"
 : "${GIT_EMAIL:='jenkins@${MASTER_SERVER}'}"
 
-cat <<EOF > ${JENKINS_HOME}/.gitconfig
-[user]
-  name = ${GIT_NAME}
-  email = ${GIT_EMAIL}
+if [ -n "${KRB5_REALM}" ] ; then
+
+    sed -i -e '/default_ccache_name/s/^/#/' /etc/krb5.conf
+    sed -i -e "/default_realm/s/^.*$/ default_realm = ${KRB5_REALM}/" /etc/krb5.conf
+    cat <<EOF > /etc/krb5.conf.d/${KRB5_REALM}.conf
+[realms]
+${KRB5_REALM} = {
+   kdc = ${KRB5_KDC}
+   admin_server = ${KRB5_ADMIN_SERVER}
+}
 EOF
+fi
 
 [ $JENKINS_UID -ne $(id -u ${JENKINS_USER}) ] && \
     usermod -u ${JENKINS_UID} ${JENKINS_USER}

@@ -12,6 +12,9 @@ set -x
 : "${KRB5_KDC}:=''}"
 : "${KRB5_ADMIN_SERVER}:=''}"
 
+: "${GIT_USER:='Jenkins Master Admin'}"
+: "${GET_EMAIL='jenkins@example.com'}"
+
 : "${JENKINS_ROOT:=/jenkins}"
 : "${JENKINS_HOME:=${JENKINS_ROOT}/agent}"
 : "${JENKINS_SSH_DIR:=${JENKINS_HOME}/.ssh}"
@@ -37,6 +40,7 @@ ${KRB5_REALM} = {
 EOF
 fi
 
+
 SERVER_URL=https://${MASTER_SERVER}:${MASTER_PORT}
 JAVAWS_URL=${SERVER_URL}/computer/${AGENT_NAME}/slave-agent.jnlp
 
@@ -54,6 +58,15 @@ chown -R jenkins:jenkins ${JENKINS_HOME}
 
 ls -laZ ${JENKINS_HOME}
 ls -lZ ${JENKINS_SSH_DIR}
+
+cat <<EOF > ~jenkins/.gitconfig
+[user]
+  name = ${GIT_USER}
+  email = ${GIT_EMAIL}
+
+[push]
+  default = simple
+EOF
 
 curl --insecure --silent ${JENKINS_AGENT_JAR_URL} > ${JENKINS_AGENT_JAR}
 

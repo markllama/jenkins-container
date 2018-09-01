@@ -17,6 +17,9 @@ set -x
 : "${JENKINS_GROUP:=jenkins}"
 : "${JENKINS_GID:=$(id -u ${JENKINS_GROUP})}"
 
+: "${GIT_USER:='Jenkins Master Admin'}"
+: "${GET_EMAIL='jenkins@example.com'}"
+
 : "${JENKINS_AGENT_JAR_URL:=https://${MASTER_SERVER}:${MASTER_PORT}/jnlpJars/agent.jar}"
 : "${JENKINS_AGENT_JAR:=${JENKINS_ROOT}/agent.jar}"
 
@@ -51,6 +54,15 @@ fi
     groupmod -g ${JENKINS_GID} ${JENKINS_GROUP}
 
 chown -R jenkins:jenkins ${JENKINS_HOME}
+
+cat <<EOF > ~jenkins/.gitconfig
+[user]
+  name = ${GIT_USER}
+  email = ${GIT_EMAIL}
+
+[push]
+  default = simple
+EOF
 
 if [ -n "${DOCKER_GID}" ] ; then
     sed -i -e 's/dockerroot/docker/' /etc/passwd

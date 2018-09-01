@@ -18,6 +18,8 @@ run:
   -e KRB5_REALM=$(KRB5_REALM) \
   -e KRB5_KDC=$(KRB5_KDC) \
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
+  -e GIT_USER=${GIT_USER} \
+  -e GIT_EMAIL=${GIT_EMAIL} \
 	markllama/cd-jenkins-agent
 
 rund:
@@ -32,4 +34,6 @@ rund:
   -e KRB5_REALM=$(KRB5_REALM) \
   -e KRB5_KDC=$(KRB5_KDC) \
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
+  -e GIT_USER=${GIT_USER} \
+  -e GIT_EMAIL=${GIT_EMAIL} \
 	markllama/cd-jenkins-agent

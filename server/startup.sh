@@ -19,6 +19,8 @@ set -x
 : "${KRB5_REALM}:=''}"
 : "${KRB5_KDC}:=''}"
 : "${KRB5_ADMIN_SERVER}:=''}"
+: "${GIT_USER:='Jenkins Master Admin'}"
+: "${GET_EMAIL='jenkins@example.com'}"
 
 : "${AGENT_PORT:=35124}"
 
@@ -54,6 +56,15 @@ ${KRB5_REALM} = {
 }
 EOF
 fi
+
+cat <<EOF > ~/.gitconfig
+[user]
+  name = ${GIT_USER}
+  email = ${GIT_EMAIL}
+
+[push]
+  default = simple
+EOF
 
 [ -d ${JENKINS_ROOT}/var/builds ] || mkdir -p ${JENKINS_ROOT}/var/builds
 [ -d ${JENKINS_ROOT}/var/workspaces ] || mkdir -p ${JENKINS_ROOT}/var/workspaces

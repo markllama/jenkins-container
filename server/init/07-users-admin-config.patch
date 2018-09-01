@@ -1,0 +1,22 @@
+--- old/config/users/admin/config.xml	2018-08-31 22:56:18.000000000 +0000
++++ config/users/admin/config.xml	2018-08-31 22:58:29.138216634 +0000
+@@ -3,18 +3,8 @@
+   <fullName>Admin User</fullName>
+   <properties>
+     <jenkins.security.ApiTokenProperty>
+-      <apiToken>{AQAAABAAAABwVF9Je3+X0IGnlefaCVzhQt0I2VXgz/5KCL28UdZaOJLobOohJda15ffIILfp5pOvVHTF6/35udnukJCYewiO43rJ86SRwpV7R2UCsmH5eviRL3TTYvP8zaN8Ieo+pm5BfneYuX7jmCooqUJH8m6498TInQDHFNHuMZc/w7PNdPk=}</apiToken>
+       <tokenStore>
+-        <tokenList>
+-          <jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+-            <uuid>42f98697-6813-4636-9f9c-110aefe2486d</uuid>
+-            <name>Legacy Token</name>
+-            <value>
+-              <version>10</version>
+-              <hash>489628503e8fb837c68be73d7c39eb283c81415c94a19ba41cde7879cf25ec28</hash>
+-            </value>
+-          </jenkins.security.apitoken.ApiTokenStore_-HashedToken>
+-        </tokenList>
++        <tokenList/>
+       </tokenStore>
+     </jenkins.security.ApiTokenProperty>
+     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">

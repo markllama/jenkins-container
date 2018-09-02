@@ -5,6 +5,8 @@ IMAGE_NAME = "markllama/cd-jenkins-agent-build"
 DOCKER_GROUP = docker
 DOCKER_GID = `grep ${DOCKER_GROUP} /etc/group | cut -d: -f3`
 
+SSH_KEY_DIR = $(HOME)/jenkins-agent-keys
+
 build:
 	docker build -t ${IMAGE_NAME} .
 
@@ -14,7 +16,7 @@ clean:
 run:
 	docker run -it --rm \
 	--name jenkins-agent \
-	--volume ~/jenkins-agent-keys:/jenkins/agent/.ssh:z \
+	--volume ${SSH_KEY_DIR}:/jenkins/agent/.ssh:z \
 	--volume /var/run/docker.sock:/var/run/docker.sock \
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \
@@ -32,7 +34,7 @@ run:
 rund:
 	docker run -d \
 	--name jenkins-agent \
-	--volume ~/jenkins-agent-keys:/jenkins/agent/.ssh:z \
+	--volume ${SSH_KEY_DIR}:/jenkins/agent/.ssh:z \
 	--volume /var/run/docker.sock:/var/run/docker.sock \
 	-e MASTER_SERVER=${MASTER_SERVER} \
 	-e AGENT_NAME=${AGENT_NAME} \

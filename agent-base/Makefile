@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 build:
-	docker build -t markllama/cd-jenkins-agent .
+	docker build -t mlamouri/cd-jenkins-agent .
 
 clean:
 	-docker rm -f jenkins-agent
@@ -20,7 +20,7 @@ run:
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
   -e GIT_USER="${GIT_USER}" \
   -e GIT_EMAIL=${GIT_EMAIL} \
-	markllama/cd-jenkins-agent
+	mlamouri/cd-jenkins-agent
 
 rund:
 	docker run -d \
@@ -36,4 +36,4 @@ rund:
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
   -e GIT_USER="${GIT_USER}" \
   -e GIT_EMAIL=${GIT_EMAIL} \
-	markllama/cd-jenkins-agent
+	mlamouri/cd-jenkins-agent

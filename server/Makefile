@@ -1,5 +1,9 @@
 #!make -f
 
+REPO_NAME=quay.io
+REPO_USER=mlamouri
+IMAGE_NAME=$(REPO_NAME)/$(REPO_USER)/art-jenkins
+
 KEYSTORE_FILE = $(PWD)/keystore.jks
 KEYSTORE_PASSWORD = badpassword
 CONFIG_SCM_REPO = git@github.com:markllama/jenkins-config.git
@@ -7,7 +11,7 @@ CONFIG_SCM_USER = markllama
 SSH_KEY_DIR = $(HOME)/jenkins-agent-keys
 
 build:
-	docker build -t markllama/cd-jenkins .
+	docker build -t $(IMAGE_NAME) .
 
 clean:
 	-docker rm -f jenkins
@@ -34,7 +38,7 @@ run: volumes
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
   -e GIT_USER="${GIT_USER}" \
   -e GIT_EMAIL=${GIT_EMAIL} \
-	markllama/cd-jenkins
+	$(IMAGE_NAME)
 
 rund: volumes
 	docker run -d --rm \
@@ -44,7 +48,7 @@ rund: volumes
 	--volume `pwd`/backups:/jenkins/backups:z \
 	--volume jenkins-secrets:/jenkins/secrets \
 	--volume jenkins-builds:/jenkins/var/builds \
-	--volume `pwd`/workspaces:/jenkins/var/workspaces:z \
+	--volume jenkins-workspaces:/jenkins/var/workspaces:z \
 	--volume $(SSH_KEY_DIR):/var/lib/jenkins/.ssh:z \
 	-e HTTPS_KEYSTORE_PASSWORD=$(KEYSTORE_PASSWORD) \
 	-e JENKINS_UID=`id -u` \
@@ -58,7 +62,7 @@ rund: volumes
   -e KRB5_ADMIN_SERVER=$(KRB5_ADMIN_SERVER) \
   -e GIT_USER="${GIT_USER}" \
   -e GIT_EMAIL=${GIT_EMAIL} \
-	markllama/cd-jenkins
+  $(IMAGE_NAME)
 
 join:
 	docker exec -it jenkins /bin/bash

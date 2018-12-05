@@ -2,7 +2,7 @@
 
 REPO_NAME=quay.io
 REPO_USER=mlamouri
-IMAGE_NAME=$(REPO_NAME)/$(REPO_USER)/art-jenkins
+IMAGE_NAME=$(REPO_NAME)/$(REPO_USER)/jenkins
 
 KEYSTORE_FILE = $(PWD)/keystore.jks
 KEYSTORE_PASSWORD = badpassword

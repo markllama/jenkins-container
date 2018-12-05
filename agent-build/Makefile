@@ -2,7 +2,7 @@
 
 REPO_NAME=quay.io
 REPO_USER=mlamouri
-IMAGE_NAME=$(REPO_NAME)/$(REPO_USER)/art-jenkins-agent
+IMAGE_NAME=$(REPO_NAME)/$(REPO_USER)/jenkins-agent
 
 DOCKER_GROUP = docker
 DOCKER_GID = `grep ${DOCKER_GROUP} /etc/group | cut -d: -f3`

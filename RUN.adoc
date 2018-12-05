@@ -28,5 +28,6 @@ export AGENT_SECRET=<hash string from master>
 == Starting an Agent
 
 ----
-(cd agent-build ; make -e rund)
+
+(cd agent-build ; AGENT_SECRET="<hash string>" make -e rund)
 ----

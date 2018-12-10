@@ -7,7 +7,7 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/
 ADD $TINI_URL/$TINI_VERSION/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
 
-ARG GOSU_VERSION=1.10
+ARG GOSU_VERSION=1.11
 ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
 ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
@@ -70,10 +70,6 @@ RUN patch < /jenkins/config/05-config.xml-rbac.patch \
 #    /jenkins/config/config.xml
 RUN patch < /jenkins/config/07-config.xml-admin-role.patch \
     /jenkins/config/config.xml
-
-
-RUN mkdir -p /jenkins/config/users/admin
-ADD init/users/admin.xml /jenkins/config/users/admin/config.xml
 
 ADD periodicBackup.xml /jenkins/config/periodicBackup.xml
 

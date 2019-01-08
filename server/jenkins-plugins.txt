@@ -25,6 +25,7 @@ github
 github-oauth
 git
 git-server
+google-compute-engine
 gradle
 groovy
 handlebars
@@ -45,6 +46,7 @@ momentjs
 pam-auth
 parameter-separator
 periodicbackup
+pipeline-aws-plugin
 pipeline-build-step
 pipeline-github-lib
 pipeline-graph-analysis

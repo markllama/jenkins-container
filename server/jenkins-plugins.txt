@@ -37,12 +37,14 @@ jms-messaging
 jquery-detached
 junit
 kerberos-sso
+lockable-resources
 ldap
 mailer
 mapdb-api
 matrix-auth
 matrix-project
 momentjs
+oauth-credentials
 pam-auth
 parameter-separator
 periodicbackup

@@ -46,7 +46,7 @@ momentjs
 pam-auth
 parameter-separator
 periodicbackup
-pipeline-aws-plugin
+pipeline-aws
 pipeline-build-step
 pipeline-github-lib
 pipeline-graph-analysis

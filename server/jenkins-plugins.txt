@@ -26,6 +26,7 @@ github-oauth
 git
 git-server
 google-compute-engine
+google-oauth-plugin
 gradle
 groovy
 handlebars
@@ -37,8 +38,8 @@ jms-messaging
 jquery-detached
 junit
 kerberos-sso
-lockable-resources
 ldap
+lockable-resources
 mailer
 mapdb-api
 matrix-auth
@@ -65,7 +66,6 @@ pipeline-stage-view
 pipeline-utility-steps
 plain-credentials
 rebuild
-redhat-ci-plugin
 resource-disposer
 role-strategy
 scm-api

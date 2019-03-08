@@ -7,7 +7,7 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/
 ADD $TINI_URL/$TINI_VERSION/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
 
-ARG GOSU_VERSION=1.10
+ARG GOSU_VERSION=1.11
 ARG GOSU_URL=https://github.com/tianon/gosu/releases/download
 ADD $GOSU_URL/$GOSU_VERSION/gosu-amd64 /usr/bin/gosu
 RUN chmod a+x /usr/bin/gosu
@@ -25,6 +25,12 @@ RUN if grep -q 'Red Hat Enterprise Linux' /etc/redhat-release ; then \
     yum -y clean all ; rm -rf /var/cache/yum
 
 RUN yum -y install java-1.8.0-openjdk git krb5-workstation ; \
+    yum -y clean all ; rm -rf /var/cache/yum
+
+# Enable cloud CLI commands
+ADD google-cloud-sdk.repo /etc/yum.repos.d/google-cloud-sdk.repo
+ARG CLOUD_CLI_RPMS="awscli gcloud"
+RUN yum -y install ${CLOUD_CLI_RPMS} ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 # systemd setup from https://github.com/projectatomic/docker-image-examples/blob/master/rhel-libvirt/libvirtd/Dockerfile

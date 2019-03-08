@@ -8,6 +8,7 @@ aws-java-sdk
 bouncycastle-api
 branch-api
 build-timeout
+copy-artifact
 cloudbees-folder
 credentials-binding
 credentials

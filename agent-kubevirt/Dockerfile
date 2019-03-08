@@ -35,7 +35,7 @@ RUN yum -y install ${CLOUD_CLI_RPMS} ; \
 
 # Add old linkchecker since CentOS doesn't have an RPM for it
 ARG LINKCHECKER_RPM_URL=https://kojipkgs.fedoraproject.org//packages/linkchecker/8.6/2.fc21/x86_64/linkchecker-8.6-2.fc21.x86_64.rpm
-RUN yum install -y ${LINKCHECKER_RPM_URL} 
+RUN yum install -y ${LINKCHECKER_RPM_URL} ; \
     yum -y clean all ; rm -rf /var/cache/yum
 
 # systemd setup from https://github.com/projectatomic/docker-image-examples/blob/master/rhel-libvirt/libvirtd/Dockerfile

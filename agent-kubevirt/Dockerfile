@@ -44,7 +44,6 @@ RUN yum install -y ${LINKCHECKER_RPM_URL}
 ARG KVM_PACKAGES="systemd libvirt libvirt-daemon qemu-kvm"
 RUN yum -y install ${KVM_PACKAGES} ; \
     yum -y clean all ; rm -rf /var/cache/yum ; \
-    
     (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /lib/systemd/system/multi-user.target.wants/*; \
     rm -f /etc/systemd/system/*.wants/*; \

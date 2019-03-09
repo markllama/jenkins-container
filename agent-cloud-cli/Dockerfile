@@ -29,7 +29,7 @@ RUN yum -y install java-1.8.0-openjdk git krb5-workstation ; \
 
 # Enable cloud CLI commands
 ADD google-cloud-sdk.repo /etc/yum.repos.d/google-cloud-sdk.repo
-ARG CLOUD_CLI_RPMS="awscli google-cloud-sdk"
+ARG CLOUD_CLI_RPMS="awscli google-cloud-sdk bind-utils"
 RUN yum -y install ${CLOUD_CLI_RPMS} ; \
     yum -y clean all ; rm -rf /var/cache/yum
 

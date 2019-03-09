@@ -12,7 +12,7 @@ run:
 	--name ${IMAGE_NAME} \
 	--volume ~/.ssh:/jenkins/agent/.ssh:z \
 	-e MASTER_SERVER=${MASTER_SERVER} \
-	-e AGENT_NAME=${AGENT_NAME} \
+	-e AGENT_NAME=cloud-sdk \
 	-e AGENT_SECRET=${AGENT_SECRET} \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \
@@ -28,7 +28,7 @@ rund:
 	--name ${IMAGE_NAME} \
 	--volume ~/.ssh:/jenkins/agent/.ssh:z \
 	-e MASTER_SERVER=${MASTER_SERVER} \
-	-e AGENT_NAME=${AGENT_NAME} \
+	-e AGENT_NAME=cloud-sdk \
 	-e AGENT_SECRET=${AGENT_SECRET} \
 	-e JENKINS_UID=`id -u` \
 	-e JENKINS_GID=`id -g` \

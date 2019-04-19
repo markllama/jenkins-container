@@ -6,13 +6,13 @@
 # From https://www.sans.org/reading-room/whitepapers/bestprac/securing-jenkins-ci-systems-36872
 # add -dname "c=US, cd=<name>, o=Red Hat Inc., ou=Engineering CD, ...
 
-CN=${CN:-hp-blade15}
-DNSDOMAIN=${DNSDOMAIN:-e2e.bos.redhat.com}
+CN=${CN:-server}
+DNSDOMAIN=${DNSDOMAIN:-lamourine.homeunix.org}
 FQDN=${CN}.${DNSDOMAIN}
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-"badpassword"}
 
 
-SUBJ="/C=US/ST=Massachusetts/L=Westford/O=Red Hat Inc./OU=Eng CD/CN=${FQDN}"
+SUBJ="/C=US/ST=Massachusetts/L=Billerica/O=lamourine/OU=parent/CN=${FQDN}"
 
 
 function create_self_signed_cert() {
